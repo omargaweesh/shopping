@@ -11,43 +11,38 @@
 </head>
 <body>
 
-		
-	   		    
-			
-   		
+	<div class="container"> 
+	<button class='add_new btn btn-outline-warning btn-lg' id='add'>Add New</button> <br>
+		<br> <div class="card">
+			<div class="card-block">
 
-			<div class="container"> 
-			<button class='add_new btn btn-outline-warning btn-lg' id='add'>Add New</button> <br>
-				<br> <div class="card">
-			 		<div class="card-block">
-					 	
-						    <table class="table table-hover ">
-						      <thead>
-						        <tr>
-						          <th>Id</th>
-						          <th>Name</th>
-						          <th>Price</th>
-						           <th class="img">Picture</th>
-						           <th>Action</th>
-						        </tr>
-						      </thead>
-						      		<tbody>
-						      		<tr th:each="pro : ${prods}">
-						      		<td class="id" th:text="${pro.id}"></td>
-						      		<td class="name" th:text="${pro.name}"></td>
-						      		<td class="price" th:text="${pro.price}"></td>
-						      		<td id="po"><img  class="adpic" th:src="@{${pro.picpath}}"></td>
-						      		<td  class="buttons"><a  th:href="@{/delete/(id=${pro.id})}" class='btn btn-danger' id='btnn' style='width:70px;margin-left:20px'>Delete</a>
-						      		
-						      		<a style='width:80px;margin-left:15px'  class='btn btn-warning' id='ebtn'>Edit</a>
-						      		</td>
-						      		</tr>	
-			     					 </tbody>
-			  				  </table>
-			    			
-	        	   </div>
-	     		</div>
-			</div>
+				    <table class="table table-hover ">
+				      <thead>
+					<tr>
+					  <th>Id</th>
+					  <th>Name</th>
+					  <th>Price</th>
+					   <th class="img">Picture</th>
+					   <th>Action</th>
+					</tr>
+				      </thead>
+						<tbody>
+						<tr th:each="pro : ${prods}">
+						<td class="id" th:text="${pro.id}"></td>
+						<td class="name" th:text="${pro.name}"></td>
+						<td class="price" th:text="${pro.price}"></td>
+						<td id="po"><img  class="adpic" th:src="@{${pro.picpath}}"></td>
+						<td  class="buttons"><a  th:href="@{/delete/(id=${pro.id})}" class='btn btn-danger' id='btnn' style='width:70px;margin-left:20px'>Delete</a>
+
+						<a style='width:80px;margin-left:15px'  class='btn btn-warning' id='ebtn'>Edit</a>
+						</td>
+						</tr>	
+						 </tbody>
+					  </table>
+
+	   </div>
+	</div>
+	</div>
 			
 			
 	<div  id="mymodal" class="modal" tabindex="-1" role="dialog">
@@ -119,22 +114,7 @@
 	</div>		
 			
 	<script>
-	function getEmployeeDetails() {
-		  $.ajax({url:"/load" , success: function(result){
-			  $(".table tbody").html('');
-			  if(result.length>0) {
-			  $.each(result, function( index, value ) {
-				  var htmlStr = "<tr><td>"+result[index].id+"</td><td>"+result[index].name+"</td><td>"+result[index].price+"</td><td><img src=\""+result[index].picpath+"\"></img></td><td><button type='button' onclick='deletee("+result[index].id+")' class='btn btn-danger' id='btnn' style='width:70px;margin-left:20px'>Delete</button>&nbsp&nbsp&nbsp<button style='width:80px;margin-left:15px' type='button' onclick='getbyid("+result[index].id+")'    class='btn btn-primary' id='ebtn'>Edit</button></td></tr>";						
-				  $(".table tbody").append(htmlStr);
-				  //$(".nav").show();
-				  
-				});
-			  
-			  } else {
-				  $(".table tbody").append('<tr><td colspan="4" style="color:red;">No records to display</td></tr>');
-			  }
-		    }});
-		}
+	
 	function deletee(id){
 		alert(id);
 		$.ajax({
