@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+
+
+</head>
+ <body>
+        
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class=" right navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" th:href="@{/map}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item ">
+        <a class=" nav-link" href="#" >
+            <div class="bas">
+                <ion-icon name="basket"></ion-icon>cart<span >0</span>
+            </div>
+        </a>
+       
+      </li>
+    </ul>
+  </div>
+</nav>
+	<form th:action=@{/invalidate/session} method="post">
+	    <input type="submit" class="ap remove" value="Remove" >
+    </form>
+        <div class="container show_product">
+        	<div class="product_child">
+	        	<h5 class="pic">picpath</h5>
+	        	<h5 class="name">name</h5>
+	        	<h5 class="price">price</h5>
+	        	<h5 class="quantity">quantity</h5>
+	        	<h5 class="total">total</h5>
+       		 </div>
+       		 <div class="product_child" th:each="pro : ${products}">
+       		 	<img class="pic" th:src="@{${pro.picpath}}">
+       		 	<h5 class="name" th:text="${pro.name}"></h5>
+       		 	<h5 class="price" th:text="${pro.price}"></h5>
+       		 	<h5 class="quantity" th:text="${pro.p_quantity}"></h5>
+       		 	<h5 class="total count" th:text="${pro.total}"></h5>
+       		 
+       		 </div>
+       			<h5 class="total t">Total</h5> <h5 class="total" th:text="${total}"></h5>
+        </div>
+		
+		 <form th:action=@{/paypal} method="get">
+	    	<input type="submit" class="ap remove" value="CheckOut" >
+    	</form>
+ 
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+        <script src="js/look2.js" ></script>
+    </body>
+</html>

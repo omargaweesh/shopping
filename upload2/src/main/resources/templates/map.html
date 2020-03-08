@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+	  	<link rel="stylesheet" href="css/style.css">
+<title>Insert title here</title>
+</head>
+<body>
+
+		
+	   		    
+			
+   		
+
+			<div class="container"> 
+			<button class='add_new btn btn-outline-warning btn-lg' id='add'>Add New</button> <br>
+				<br> <div class="card">
+			 		<div class="card-block">
+					 	
+						    <table class="table table-hover ">
+						      <thead>
+						        <tr>
+						          <th>Id</th>
+						          <th>Name</th>
+						          <th>Price</th>
+						           <th class="img">Picture</th>
+						           <th>Action</th>
+						        </tr>
+						      </thead>
+						      		<tbody>
+						      		<tr th:each="pro : ${prods}">
+						      		<td class="id" th:text="${pro.id}"></td>
+						      		<td class="name" th:text="${pro.name}"></td>
+						      		<td class="price" th:text="${pro.price}"></td>
+						      		<td id="po"><img  class="adpic" th:src="@{${pro.picpath}}"></td>
+						      		<td  class="buttons"><a  th:href="@{/delete/(id=${pro.id})}" class='btn btn-danger' id='btnn' style='width:70px;margin-left:20px'>Delete</a>
+						      		
+						      		<a style='width:80px;margin-left:15px'  class='btn btn-warning' id='ebtn'>Edit</a>
+						      		</td>
+						      		</tr>	
+			     					 </tbody>
+			  				  </table>
+			    			
+	        	   </div>
+	     		</div>
+			</div>
+			
+			
+	<div  id="mymodal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <a href="" class="btn btn-danger dbtn">DELETE</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+	<div class="eform">
+	<form action="/update" method="post" enctype="multipart/form-data" >
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        	<div class="form-group">
+	            <label for="id" class="col-form-label">Id:</label>
+	            <input type="text" class="form-control" value="" name="id" id="id">
+	          	</div>
+	         
+	          <div class="form-group">
+	            <label for="name" class="col-form-label">Name:</label>
+	            <input type="text" class="form-control" value="" name="name" id="name">
+	          </div>
+	          <div class="form-group">
+	            <label for="price" class="col-form-label">Price:</label>
+	            <input type="text" class="form-control" value="" name="price" id="price">
+	          </div>
+	          <div class="form-group">
+	          		
+	            <label for="designation" class="col-form-label">File:</label>
+	            	
+	            <input type="file" name="picpath"  />
+	          		
+	          </div>
+	         
+	        
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <input type="submit" class="btn btn-primary"  value="save" />
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		</form>
+	</div>		
+			
+	<script>
+	function getEmployeeDetails() {
+		  $.ajax({url:"/load" , success: function(result){
+			  $(".table tbody").html('');
+			  if(result.length>0) {
+			  $.each(result, function( index, value ) {
+				  var htmlStr = "<tr><td>"+result[index].id+"</td><td>"+result[index].name+"</td><td>"+result[index].price+"</td><td><img src=\""+result[index].picpath+"\"></img></td><td><button type='button' onclick='deletee("+result[index].id+")' class='btn btn-danger' id='btnn' style='width:70px;margin-left:20px'>Delete</button>&nbsp&nbsp&nbsp<button style='width:80px;margin-left:15px' type='button' onclick='getbyid("+result[index].id+")'    class='btn btn-primary' id='ebtn'>Edit</button></td></tr>";						
+				  $(".table tbody").append(htmlStr);
+				  //$(".nav").show();
+				  
+				});
+			  
+			  } else {
+				  $(".table tbody").append('<tr><td colspan="4" style="color:red;">No records to display</td></tr>');
+			  }
+		    }});
+		}
+	function deletee(id){
+		alert(id);
+		$.ajax({
+			url:'/delete/'+id,
+			method:'DELETE'
+			,success: function(){
+				alert('Are you sure you want to Delete it');
+				getEmployeeDetails();
+			},
+			error: function(){
+				alert("Somthing Go Wrong..! ")
+			}
+		});
+	}
+	
+	function getbyid(id){
+		
+		
+		$(".eform #exampleModal").modal();
+		$.ajax({
+			url:'/getone/'+id,
+			method:'GET',
+        
+			success:function(data){
+				
+				$(".modal-body #id").val(data.id);
+				$(".modal-body #name").val(data.name);
+				$(".modal-body #price").val(data.price);
+			},error:function(){
+				alert("somthing go wrong .....!");
+			}
+		});
+		
+	}
+		
+	
+	$(document).ready(function () {
+		
+		$("tbody td").on('click',"#ebtn",function(){
+			var id=$(this).closest("tr").find(".id").text();
+		
+			getbyid(id);
+		});
+	
+		
+		$("#add").click(function(){
+			
+			$(".eform #exampleModal").modal();
+		});
+	   
+	});
+
+	
+	
+	</script>
+</body>
+</html>

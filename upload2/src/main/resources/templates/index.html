@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+
+
+</head>
+ <body>
+        
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class=" right navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item ">
+        <a class=" nav-link" th:href="@{/index}" >
+            <div class="bas">
+                <ion-icon name="basket"></ion-icon>cart<span >0</span>
+            </div>
+        </a>
+       
+      </li>
+    </ul>
+  </div>
+</nav>
+        
+        
+        
+        
+        <div class="container">
+            <div class="par row">
+                
+                <div th:each="e : ${emp}" class="on col-lg-4">
+                    <div class="b">
+                        <div class="cont">
+                          <img  th:src="@{${e.picpath}}">
+                        </div>
+                        <div class="sp">
+                        	<h3 class="val" th:text="${e.name}"></h3>
+                            <a href="#"class="ap" >buy</a>
+                           <span class="va" th:text="${e.id}" style="display:none"></span>
+                            <span class="ap v" th:text="${e.price}" ></span>
+                        </div>
+                    </div> 
+                </div>
+                
+                
+                
+           
+            </div>
+        </div>
+
+ 
+        <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+        <script src="js/look.js" ></script>
+    </body>
+</html>
